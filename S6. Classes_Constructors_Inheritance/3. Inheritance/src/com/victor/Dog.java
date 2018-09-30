@@ -52,9 +52,11 @@ public class Dog extends Animal {
         System.out.println("moveLegs() called");
     }
 
-    // do not confuse override and overload
-// overloading - one name, but different parameters
-// override - one name, input output types, different result
+    // do not confuse overriding and overloading
+// overloading - reuse a method name with a different parameters
+// may have different return types, access modifiers, must have different parameters
+// overriding - override a behavior. always in two classes child-parent. Must have the same name and same parameters.
+// must not have a lower modifier, must not throw a new exceptions.
     @Override
     public void move(int speed) {
         System.out.println("Dog.move() called");
