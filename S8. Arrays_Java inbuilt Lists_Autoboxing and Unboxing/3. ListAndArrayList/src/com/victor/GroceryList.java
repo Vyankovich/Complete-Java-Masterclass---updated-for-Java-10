@@ -13,6 +13,10 @@ public class GroceryList {
         groceryList.add(item);
     }
 
+    public ArrayList<String> getGroceryList() {
+        return groceryList;
+    }
+
     public void printGroceryList() {
         System.out.println("You have " + groceryList.size() + " items in your grocery list");
         for (int i = 0; i < groceryList.size(); i++) {
@@ -20,23 +24,40 @@ public class GroceryList {
         }
     }
 
-    public void mofidyGroceryItem(int position, String newItem) {
+    public void modifyGroceryItem(String currentItem, String newItem) {
+        int position = findItem(currentItem);
+        if (position >= 0) {
+            groceryList.set(position, newItem);
+        } else {
+            System.out.println(currentItem + " not found in a list.");
+        }
+    }
+    // we do this method internal because we don't want to expose integer to the calling process
+// in other words: user don't need to know indexes of items
+    private void modifyGroceryItem(int position, String newItem) {
         groceryList.set(position, newItem);
         System.out.println("Grocery item " + (position+1) + " has been modified .");
     }
 
-    public void removeGroceryItem(int position) {
-        String theItem = groceryList.get(position);
+    public void removeGroceryItem(String item) {
+        int position = findItem(item);
+        if (position >= 0) {
+            groceryList.remove(position);
+        }
+    }
+    // we do this method internal because we don't want to expose integer to the calling process
+// in other words: user don't need to know indexes of items
+    private void removeGroceryItem(int position) {
         groceryList.remove(position);
     }
+// we do this method internal because we don't want to expose integer to the calling process
+// in other words: user don't need to know indexes of items
+    private int findItem(String searchItem) {
+        return groceryList.indexOf(searchItem);
+    }
 
-    public String findItem(String searchItem) {
-        //boolean exists = groceryList.contains(searchItem);
-        int position = groceryList.indexOf(searchItem);
-        if (position >= 0) {
-            return groceryList.get(position);
-        }
-        return null;
+    public boolean onFile(String searchItem) {
+        int position = findItem(searchItem);
+        return position >= 0;
     }
 }
-
