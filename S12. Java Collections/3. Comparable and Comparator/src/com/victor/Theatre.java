@@ -1,16 +1,28 @@
 package com.victor;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-
 /**
  * Created by dev on 04.11.2018.
  */
 public class Theatre {
     private final String theatreName;
     private List<Seat> seats = new ArrayList<>();
+// anonymous inner class implementing Comparator
+    static final Comparator<Seat> PRICE_ORDER = new Comparator<Seat>() {
+        @Override
+        public int compare(Seat seat1, Seat seat2) {
+            if (seat1.getPrice() < seat2.getPrice()) {
+                return -1;
+            } else if (seat1.getPrice() > seat2.getPrice()) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    };
 
     public Theatre(String theatreName, int numRows, int seatsPerRow) {
         this.theatreName = theatreName;
@@ -52,10 +64,9 @@ public class Theatre {
         }
     }
 
-
     // in order to compare objects of this class, class have to implement Compare interface
     // to show HOW to compare, by which parameter
-    private class Seat implements Comparable<Seat> {
+    public class Seat implements Comparable<Seat> {
         private final String seatNumber;
         private double price;
         private boolean reserved = false;
@@ -98,6 +109,4 @@ public class Theatre {
             return price;
         }
     }
-
-
 }
