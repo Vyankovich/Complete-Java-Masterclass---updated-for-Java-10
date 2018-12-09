@@ -1,6 +1,7 @@
 package com.yankovich.todolist.datamodel;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,13 +12,12 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
-import java.util.List;
 
 public class TodoData {
     private static TodoData instance = new TodoData();
     private static String filename = "TodoListItems.txt";
 
-    private List<TodoItem> todoItems;
+    private ObservableList<TodoItem> todoItems;
     private DateTimeFormatter formatter;
 
     public static TodoData getInstance() {
@@ -28,7 +28,7 @@ public class TodoData {
         formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     }
 
-    public List<TodoItem> getTodoItems() {
+    public ObservableList<TodoItem> getTodoItems() {
         return todoItems;
     }
 
@@ -69,9 +69,9 @@ public class TodoData {
             while (it.hasNext()){
                 TodoItem item = it.next();
                 bw.write(String.format("%s\t%s\t%s",
-                                    item.getShortDescription(),
-                                    item.getDetails(),
-                                    item.getDeadline().format(formatter)));
+                        item.getShortDescription(),
+                        item.getDetails(),
+                        item.getDeadline().format(formatter)));
                 bw.newLine();
             }
         } finally {
@@ -79,6 +79,10 @@ public class TodoData {
                 bw.close();
             }
         }
+    }
+
+    public void deleteTodoItem(TodoItem item) {
+        todoItems.remove(item);
     }
 
 }
